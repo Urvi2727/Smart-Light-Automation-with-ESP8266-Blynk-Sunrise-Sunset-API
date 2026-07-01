@@ -1,190 +1,170 @@
-\# 🏠 Home Light Automation using ESP8266 \& Blynk
+# 🏠 Intelligent Home Light Automation using ESP8266, Blynk & Sunrise/Sunset API
 
+An **IoT-based smart home lighting system** that automates lighting using an **ESP8266 (NodeMCU)**. The system combines **real-time sunrise/sunset scheduling**, **ambient light sensing**, and **remote mobile control** to provide an energy-efficient and adaptive lighting solution.
 
-
-An IoT-based home automation system that controls home lighting using an ESP8266 (NodeMCU).  
-
-The system supports \*\*dual-mode automation\*\* using real-time \*\*Google Sunrise/Sunset API\*\* data and \*\*ambient light sensing (LDR)\*\*, along with manual control via the Blynk IoT platform.
-
-
+The project supports **dual automation modes**, allowing users to switch seamlessly between **API-based scheduling** and **LDR-based environmental sensing**, while also providing manual control through the **Blynk IoT platform**.
 
 ---
 
+## ✨ Key Features
 
-
-\## ✨ Features
-
-
-
-\- 📱 Remote light control using Blynk app
-
-\- 🌅 Automatic control using Google Sunrise/Sunset API
-
-\- 🌗 Sensor-based control using LDR (ambient light)
-
-\- 🔁 Dual-mode operation: API mode or Sensor mode
-
-\- 🕹️ Manual override from mobile app
-
-\- 🌐 Real-time monitoring
-
-\- ⚡ Low-cost and easy to implement
-
-
+- 📱 Remote light control through the Blynk mobile application
+- 🌅 Automatic scheduling using Sunrise/Sunset API based on geographical location
+- 🌗 Ambient light detection using an LDR sensor
+- 🔁 Dual automation modes with real-time switching
+- 🎛️ Manual override available at any time
+- 📡 Live monitoring through the Blynk dashboard
+- ⚡ Energy-efficient operation by eliminating unnecessary lighting
+- 🔧 Modular architecture that can be extended for additional smart home devices
 
 ---
 
+# 🏗️ System Architecture
 
-
-\## 🧰 Components Used
-
-
-
-\- ESP8266 NodeMCU
-
-\- LED / AC Bulb (Load)
-
-\- LDR with LM393 module
-
-\- Jumper wires
-
-\- Breadboard
-
-\- Micro USB cable
-
-\- Wi-Fi connection
-
-
+```
+                 Light Sensor (LDR)
+                        │
+                        ▼
+                ESP8266 (NodeMCU)
+              ┌─────────┼──────────┐
+              │         │          │
+              ▼         ▼          ▼
+         Blynk Cloud  Sunrise API  Relay Module
+              │                     │
+              └────────────┬────────┘
+                           ▼
+                     Home Lighting
+```
 
 ---
 
+## 🧰 Hardware Components
 
-
-\## 🖥️ Software \& Tools
-
-
-
-\- Arduino IDE
-
-\- Blynk IoT Platform (Web \& Mobile)
-
-\- ESP8266 Board Package
-
-\- Git \& GitHub
-
-\- VS Code (optional)
-
-
+- ESP8266 NodeMCU
+- LM393 + LDR Module
+- Relay Module
+- LED / AC Load
+- Breadboard
+- Jumper Wires
+- USB Power Supply
+- Wi-Fi Network
 
 ---
 
+## 💻 Software & Technologies
 
-
-\## ⚙️ Working Principle
-
-
-
-The system operates in two automatic modes along with manual control:
-
-
-
-\### 🌅 API-Based Mode
-
-\- ESP8266 fetches sunrise and sunset time using Google API.
-
-\- Lights turn ON after sunset and OFF after sunrise automatically.
-
-\- Provides accurate daily scheduling based on location.
-
-
-
-\### 🌗 Sensor-Based Mode
-
-\- LDR senses surrounding light intensity.
-
-\- If ambient light is low → lights turn ON.
-
-\- If ambient light is high → lights turn OFF.
-
-\- Useful during cloudy or sudden lighting changes.
-
-
-
-\### 🔁 Dual-Mode Toggle
-
-\- User can switch between API mode and Sensor mode using a toggle button in Blynk.
-
-\- Manual control can override automation when required.
-
-
-
-This ensures reliable and adaptive lighting under all conditions.
-
-
+- Arduino IDE
+- ESP8266 Arduino Core
+- Blynk IoT Platform
+- REST API Integration
+- C++
+- Git & GitHub
 
 ---
 
+# ⚙️ System Workflow
 
+The controller continuously monitors the selected operating mode and performs lighting automation accordingly.
 
-\## 📱 Blynk Dashboard \& Console
+## 🌅 Mode 1 — Sunrise/Sunset Automation
 
+- Retrieves sunrise and sunset timings using a REST API.
+- Automatically turns lights ON after sunset.
+- Automatically turns lights OFF after sunrise.
+- Eliminates the need for fixed timers.
 
+### Advantages
 
-Below is the Blynk console/dashboard used to monitor and control the system:
-
-
-
-!\[Blynk Console](blynk\_console.png)
-
-
-
-\### 🛠️ How to Create the Dashboard
-
-
-
-1\. Go to \*\*Blynk Console\*\* and create a new template.
-
-2\. Name it \*\*HOME LIGHT AUTOMATION\*\* and select hardware as \*\*ESP8266\*\*.
-
-3\. Create a new device from this template and copy the \*\*Auth Token\*\*.
-
-4\. In the Web/Mobile dashboard, add widgets:
-
-
-
-&nbsp;  - 🔢 \*\*Display Widget\*\* → Virtual Pin \*\*V1\*\* → LDR Light Sensor value  
-
-&nbsp;  - 💡 \*\*Button Widget\*\* → Virtual Pin \*\*V2\*\* → Light/Relay control (Switch mode)  
-
-&nbsp;  - 🔁 \*\*Button Widget\*\* → Virtual Pin \*\*V3\*\* → Toggle between:
-
-&nbsp;    - Google API mode 🌅
-
-&nbsp;    - LDR Sensor mode 🌗  
-
-
-
-5\. Save the dashboard.
-
-
-
-Once the ESP8266 is online, you can control and monitor the lights in real time.
-
-
+- Location-aware scheduling
+- Automatically adapts to seasonal daylight changes
+- No manual reconfiguration required
 
 ---
 
+## 🌗 Mode 2 — Ambient Light Automation
 
+- Continuously monitors surrounding light intensity using an LDR sensor.
+- Turns lights ON when ambient light falls below the threshold.
+- Turns lights OFF when sufficient natural light is available.
 
-\## 🚀 Getting Started
+### Advantages
 
+- Responds instantly to changing weather conditions
+- More adaptive than time-based automation
+- Conserves electrical energy
 
+---
 
-\### 1️⃣ Clone the Repository
+## 🎛️ Manual Control
+
+The system also supports complete manual control through the Blynk application.
+
+Users can:
+
+- Turn lights ON/OFF remotely
+- Switch between API and Sensor modes
+- Monitor sensor values in real time
+
+Manual commands always take priority over automation.
+
+---
+
+# 📱 Blynk Dashboard
+
+The Blynk dashboard provides a centralized interface for monitoring and controlling the system.
+
+## Widgets Used
+
+| Widget | Virtual Pin | Function |
+|---------|-------------|----------|
+| Display | V1 | Displays LDR sensor readings |
+| Switch | V2 | Manual Light Control |
+| Switch | V3 | Toggle between API Mode and Sensor Mode |
+
+---
+
+# 🚀 Future Improvements
+
+- MQTT-based communication
+- Home Assistant integration
+- Voice control using Google Assistant / Alexa
+- Occupancy detection using PIR sensors
+- Energy consumption analytics
+- Weather-aware lighting automation
+- AI-based predictive lighting schedules
+
+---
+
+# 🛠️ Getting Started
+
+### Clone the Repository
 
 ```bash
-
 git clone https://github.com/Urvi2727/Home-Light-Automation.git
+cd Home-Light-Automation
+```
 
+### Install Dependencies
 
+- Install ESP8266 Board Package
+- Install the required Arduino libraries
+- Create a Blynk Template
+- Add your Auth Token
+- Configure Wi-Fi credentials
+- Upload the code to ESP8266
 
+---
+
+# 📈 Project Highlights
+
+- Developed an IoT-based smart lighting automation system using ESP8266.
+- Integrated REST APIs with embedded hardware for real-time scheduling.
+- Implemented dual-mode automation combining environmental sensing and cloud-based scheduling.
+- Enabled remote monitoring and control using the Blynk IoT platform.
+- Designed a modular architecture that can be extended into a complete smart home ecosystem.
+
+---
+
+## 📄 License
+
+This project is intended for educational and learning purposes.
